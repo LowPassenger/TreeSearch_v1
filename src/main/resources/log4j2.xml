@@ -8,7 +8,7 @@
         </File>
     </Appenders>
     <Loggers>
-        <Logger name="org.console" level="info" additivity="true">
+        <Logger name="org.productenginetest" level="info" additivity="true">
             <AppenderRef ref="LogToFile"/>
         </Logger>
         <Root level="error">

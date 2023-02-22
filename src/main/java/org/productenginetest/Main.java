@@ -1,7 +1,10 @@
 package org.productenginetest;
 
+import java.io.File;
 import java.util.List;
+import java.util.Map;
 import java.util.Scanner;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentLinkedDeque;
 import java.util.stream.Stream;
 import lombok.extern.log4j.Log4j2;
@@ -16,7 +19,8 @@ public class Main {
     public static void main(String[] args) {
         System.out.println("Please enter the root folder for search: ");
         String rootPath = readLineFromKeyboard();
-        while (rootPath.matches(ROOT_NODE_REGEX)) {
+        while (rootPath.matches(ROOT_NODE_REGEX) || !new File(rootPath).exists()) {
+            System.out.println("Bed root path or directory doesn't exist. ");
             tryAgain();
         }
         System.out.println("Please enter the positive integer depth for search: ");
@@ -31,22 +35,24 @@ public class Main {
         while (searchMask == null) {
             tryAgain();
         }
+
         long trackTimeStamp = System.currentTimeMillis();
-        ConcurrentLinkedDeque<String> filesTree = trackman.treeTrack(rootPath, searchDepth);
+        ConcurrentHashMap<String, String> fileTree = trackman.treeTraversal(rootPath, searchDepth);
         log.info("Collection for treeTrack {}, time for searching {}, search params: "
                         + "rootPath {}, search depth {}, search mask {}",
-                filesTree.getClass(), System.currentTimeMillis() - trackTimeStamp, rootPath,
+                fileTree.getClass(), System.currentTimeMillis() - trackTimeStamp, rootPath,
                 searchDepth, searchMask);
         trackTimeStamp = System.currentTimeMillis();
-        List<String> searchResult = search.searchMatcher(filesTree, searchMask);
+        List<String> searchResult = search.searchMatcher(fileTree, searchMask);
         log.info("Collection for treeSearch {}, time for searching {}, search params: "
                         + " search mask {}",
                 searchResult.getClass(), System.currentTimeMillis() - trackTimeStamp, searchMask);
         if (searchResult.isEmpty()) {
             System.out.println("Result: none");
+        } else {
+            System.out.println("Results: ");
+            Stream.of(searchResult).forEach(System.out::println);
         }
-        System.out.println("Results: ");
-        Stream.of(searchResult).forEach(System.out::println);
     }
 
     private static String readLineFromKeyboard() {
@@ -55,7 +61,7 @@ public class Main {
     }
 
     private static String tryAgain() {
-        System.out.print("Please try again! ");
+        System.out.print("Please try again! " + System.lineSeparator());
         String line = scanner.nextLine();
         return line;
     }
@@ -65,7 +71,7 @@ public class Main {
             return false;
         }
         try {
-            double d = Double.parseDouble(strNum);
+            double parseDouble = Double.parseDouble(strNum);
         } catch (NumberFormatException nfe) {
             return false;
         }
