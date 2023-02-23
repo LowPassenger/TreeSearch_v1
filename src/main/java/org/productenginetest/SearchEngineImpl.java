@@ -14,11 +14,8 @@ public class SearchEngineImpl implements SearchEngine {
     private String actual;
 
     @Override
-    public List<String> searchMatcher(ConcurrentHashMap<String, String> fileTree, String searchMask) {
-        List<String> searchResult = new ArrayList<>();
-        Iterator<Map.Entry<String, String>> iterator = fileTree.entrySet().iterator();
-        while (iterator.hasNext()) {
-            Map.Entry<String, String> entry = iterator.next();
+    public void searchMatcher(ConcurrentHashMap<String, String> fileTree, String searchMask) {
+        for (Map.Entry<String, String> entry : fileTree.entrySet()) {
             if (entry.getValue().equals(PLUG)) {
                 raw = entry.getKey();
             } else {
@@ -27,11 +24,11 @@ public class SearchEngineImpl implements SearchEngine {
             String[] split = raw.split("/");
             Pattern pattern = Pattern.compile(maskCorrecter(searchMask));
             Matcher matcher = pattern.matcher(split[split.length - 1]);
+
             if (matcher.matches()) {
-                searchResult.add(raw);
+                System.out.println(raw);
             }
         }
-        return searchResult;
     }
 
     private String maskCorrecter(String searchMask) {

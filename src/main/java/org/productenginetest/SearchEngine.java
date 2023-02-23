@@ -5,5 +5,5 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentLinkedDeque;
 
 public interface SearchEngine {
-    List<String> searchMatcher(ConcurrentHashMap<String, String> fileTree, String searchMask);
+    void searchMatcher(ConcurrentHashMap<String, String> fileTree, String searchMask);
 }

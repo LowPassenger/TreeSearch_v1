@@ -1,9 +1,9 @@
 package org.productenginetest;
 
 import java.io.File;
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.concurrent.ConcurrentHashMap;
-
 
 public class TreeTrackmanImpl implements TreeTrackman {
     public ConcurrentHashMap<String, String> fileTree = new ConcurrentHashMap(16, 0.75F, 1);
@@ -26,9 +26,7 @@ public class TreeTrackmanImpl implements TreeTrackman {
                         elements.add(element);
                         contents = element.listFiles();
                        if (contents != null) {
-                           for (File content : contents) {
-                               commonElements.add(content);
-                           }
+                           commonElements.addAll(Arrays.asList(contents));
                        }
                     }
                 }
