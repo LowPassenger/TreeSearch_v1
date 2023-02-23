@@ -1,15 +1,15 @@
 package org.productenginetest;
 
 import java.io.File;
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.concurrent.ConcurrentHashMap;
 
-public class TreeTrackmanImpl implements TreeTrackman {
+public class TreeTrackManImpl implements TreeTrackMan {
     private static final String PLUG = "empty";
-    private ConcurrentHashMap<String, String> fileTree = new ConcurrentHashMap(16, 0.75F, 1);
-    private LinkedList<File> elements = new LinkedList<>();
-    private LinkedList<File> levelElements = new LinkedList<>();
-    private File[] contents;
+    private final ConcurrentHashMap<String, String> fileTree = new ConcurrentHashMap<>(16, 0.75F, 1);
+    private final LinkedList<File> elements = new LinkedList<>();
+    private final LinkedList<File> levelElements = new LinkedList<>();
 
     @Override
     public ConcurrentHashMap<String, String> treeTraversal(String rootFolder, int depth) {
@@ -23,11 +23,9 @@ public class TreeTrackmanImpl implements TreeTrackman {
                 }
                 if (element.isDirectory()) {
                     elements.add(element);
-                    contents = element.listFiles();
+                    File[] contents = element.listFiles();
                     if (contents != null) {
-                        for (File content : contents) {
-                            commonElements.add(content);
-                        }
+                        commonElements.addAll(Arrays.asList(contents));
                     }
                 }
             }

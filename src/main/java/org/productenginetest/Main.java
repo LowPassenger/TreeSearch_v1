@@ -9,8 +9,8 @@ import lombok.extern.log4j.Log4j2;
 
 @Log4j2
 public class Main {
-    private static Scanner scanner = new Scanner(System.in);
-    private static final TreeTrackman trackman = new TreeTrackmanImpl();
+    private static final Scanner scanner = new Scanner(System.in);
+    private static final TreeTrackMan trackman = new TreeTrackManImpl();
     private static final SearchEngine search = new SearchEngineImpl();
 
     public static void main(String[] args) {
@@ -26,7 +26,7 @@ public class Main {
             {
                 System.out.println("Please enter the positive integer depth (0...50) for search: ");
                 try {
-                    searchDepth = Integer.valueOf(readLineFromKeyboard());
+                    searchDepth = Integer.parseInt(readLineFromKeyboard());
                     if (searchDepth < 0 || searchDepth > 50) {
                         break readDepth;
                     }
@@ -63,13 +63,11 @@ public class Main {
     }
 
     private static String readLineFromKeyboard() {
-        String line = scanner.nextLine();
-        return line;
+        return scanner.nextLine();
     }
 
     private static String tryAgain() {
         System.out.print("Please try again! " + System.lineSeparator());
-        String line = scanner.nextLine();
-        return line;
+        return scanner.nextLine();
     }
 }

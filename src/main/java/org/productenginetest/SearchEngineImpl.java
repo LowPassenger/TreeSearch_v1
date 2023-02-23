@@ -1,23 +1,19 @@
 package org.productenginetest;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class SearchEngineImpl implements SearchEngine {
     private static final String PLUG = "empty";
-    private String raw;
-    private String actual;
 
     @Override
     public List<String> searchMatcher(ConcurrentHashMap<String,
             String> fileTree, String searchMask) {
         List<String> searchResult = new ArrayList<>();
-        Iterator<Map.Entry<String, String>> iterator = fileTree.entrySet().iterator();
-        while (iterator.hasNext()) {
-            Map.Entry<String, String> entry = iterator.next();
+        for (Map.Entry<String, String> entry : fileTree.entrySet()) {
+            String raw;
             if (entry.getValue().equals(PLUG)) {
                 raw = entry.getKey();
             } else {
