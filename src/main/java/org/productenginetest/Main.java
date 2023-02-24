@@ -1,6 +1,7 @@
 package org.productenginetest;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 import java.util.concurrent.ConcurrentSkipListSet;
@@ -44,7 +45,8 @@ public class Main {
         scanner.close();
 
         long trackTimeStamp = System.currentTimeMillis();
-        ConcurrentSkipListSet<String> fileTree = trackMan.treeTraversal(rootPath, searchDepth);
+        ArrayList<ConcurrentSkipListSet<String>> fileTree = trackMan.treeTraversal(rootPath,
+                searchDepth);
         log.info("Collection for treeTrack {}, time for searching {}, search params: "
                         + "rootPath {}, search depth {}, search mask {}",
                 fileTree.getClass(), System.currentTimeMillis() - trackTimeStamp, rootPath,

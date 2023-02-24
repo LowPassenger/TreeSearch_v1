@@ -6,13 +6,16 @@ import java.util.concurrent.ConcurrentSkipListSet;
 
 public class SearchEngineImpl implements SearchEngine {
     @Override
-    public List<String> searchMatcher(ConcurrentSkipListSet<String> fileTree, String searchMask) {
+    public List<String> searchMatcher(ArrayList<ConcurrentSkipListSet<String>> fileTree,
+                                      String searchMask) {
         List<String> searchResult = new ArrayList<>();
-        for (String element : fileTree) {
-            String[] filePath = element.split("/");
-            String globMask = maskCorrector(searchMask);
-            if (filePath.length != 0 && (filePath[filePath.length - 1]).matches(globMask)) {
-                searchResult.add(element);
+        for (ConcurrentSkipListSet<String> levelElements : fileTree) {
+            for (String element : levelElements) {
+                String[] filePath = element.split("/");
+                String globMask = maskCorrector(searchMask);
+                if ((filePath[filePath.length - 1]).matches(globMask)) {
+                    searchResult.add(element);
+                }
             }
         }
         return searchResult;
