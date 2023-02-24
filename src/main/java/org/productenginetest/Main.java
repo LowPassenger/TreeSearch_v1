@@ -3,14 +3,14 @@ package org.productenginetest;
 import java.io.File;
 import java.util.List;
 import java.util.Scanner;
-import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentSkipListSet;
 import java.util.stream.Stream;
 import lombok.extern.log4j.Log4j2;
 
 @Log4j2
 public class Main {
     private static final Scanner scanner = new Scanner(System.in);
-    private static final TreeTrackMan trackman = new TreeTrackManImpl();
+    private static final TreeTrackMan trackMan = new TreeTrackManImpl();
     private static final SearchEngine search = new SearchEngineImpl();
 
     public static void main(String[] args) {
@@ -44,7 +44,7 @@ public class Main {
         scanner.close();
 
         long trackTimeStamp = System.currentTimeMillis();
-        ConcurrentHashMap<String, String> fileTree = trackman.treeTraversal(rootPath, searchDepth);
+        ConcurrentSkipListSet<String> fileTree = trackMan.treeTraversal(rootPath, searchDepth);
         log.info("Collection for treeTrack {}, time for searching {}, search params: "
                         + "rootPath {}, search depth {}, search mask {}",
                 fileTree.getClass(), System.currentTimeMillis() - trackTimeStamp, rootPath,

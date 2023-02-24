@@ -1,8 +1,8 @@
 package org.productenginetest;
 
 import java.util.List;
-import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentSkipListSet;
 
 public interface SearchEngine {
-    List<String> searchMatcher(ConcurrentHashMap<String, String> fileTree, String searchMask);
+    List<String> searchMatcher(ConcurrentSkipListSet<String> fileTree, String searchMask);
 }

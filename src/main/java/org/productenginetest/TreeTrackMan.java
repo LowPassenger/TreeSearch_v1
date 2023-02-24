@@ -1,7 +1,7 @@
 package org.productenginetest;
 
-import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentSkipListSet;
 
 public interface TreeTrackMan {
-    ConcurrentHashMap<String, String> treeTraversal(String rootFolder, int depth);
+    ConcurrentSkipListSet<String> treeTraversal(String rootFolder, int depth);
 }
